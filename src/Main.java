@@ -7,18 +7,27 @@ import Enum.Type;
 import Property.Service.Property.Service;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Service imb = new Service();
         Map<Integer, Imobiliaria> imobList = new TreeMap<>();
-        imobList.put(190,new Imobiliaria(190,800.0,Type.RESIDENCIAL));
-        imobList.put(191,new Imobiliaria(191,700.0,Type.RESIDENCIAL));
+        imobList.put(190, new Imobiliaria(190, 800.0, Type.RESIDENCIAL));
+        imobList.put(191, new Imobiliaria(191, 700.0, Type.RESIDENCIAL));
 
-        int opcao = 0;
-        do {
-                System.out.printf("MENU %n1 -> Adicionar Imóvel %n2 -> Remover Imóvel %n3 -> Mostrar ordenado pelo codigo %n4 -> Procurar por Código %n5 -> Sair%n");
-                opcao = sc.nextInt();
+        int opcao;
+        try {
+            do {
+                try {
+                    do {
+                        System.out.printf("MENU %n1 -> Adicionar Imóvel %n2 -> Remover Imóvel %n3 -> Mostrar ordenado pelo codigo %n4 -> Procurar por Código %n5 -> Sair%n");
+                        opcao = sc.nextInt();
+                        if ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5)) {
+                            System.out.println("type a value that respond to an option");
+                        }
+                    } while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5));
+                } catch (InputMismatchException e) {
+                    throw new ForeignException("type a value that respond to an option");
+                }
 
                 switch (opcao) {
                     case 1:
@@ -41,7 +50,7 @@ public class Main {
                             System.out.print("digite o valor do aluguel base: ");
                             double valorAluguel = sc.nextDouble();
                             imb.insertProperty(codigoImovel, valorAluguel, type, imobList);
-                        }catch (ForeignException e){
+                        } catch (ForeignException e) {
                             System.out.println(e.getMessage());
                         }
                         break;
@@ -51,7 +60,7 @@ public class Main {
                             System.out.print("Digite o código do imóvel a remover: ");
                             int codeRemove = sc.nextInt();
                             imb.removeProperty(codeRemove, imobList);
-                        } catch (ForeignException e){
+                        } catch (ForeignException e) {
                             System.out.println(e.getMessage());
                         }
                         break;
@@ -61,16 +70,19 @@ public class Main {
                             System.out.println("Código    Valor Aluguel    Tipo");
                             imb.findAll(imobList);
                         }
-                    break;
+                        break;
                     case 4:
                         System.out.print("Digite o código do imóvel a ser pesquisado: ");
                         int searchCode = sc.nextInt();
-                        imb.findById(searchCode,imobList);
-                    break;
+                        imb.findById(searchCode, imobList);
+                        break;
                 }
             } while (opcao != 5);
-
-
+        }catch (InputMismatchException e){
+            throw new ForeignException("invalid value");
         }
+
+
+    }
 
     }
