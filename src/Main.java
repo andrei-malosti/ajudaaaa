@@ -2,7 +2,6 @@ import java.util.*;
 
 import Property.Imobiliaria;
 import Exception.ForeignException;
-import Exception.Handler.ExceptionHandler;
 import Enum.Type;
 import Property.Service.Property.Service;
 
@@ -17,7 +16,6 @@ public class Main {
         int opcao;
         try {
             do {
-                try {
                     do {
                         System.out.printf("MENU %n1 -> Adicionar Imóvel %n2 -> Remover Imóvel %n3 -> Mostrar ordenado pelo codigo %n4 -> Procurar por Código %n5 -> Sair%n");
                         opcao = sc.nextInt();
@@ -25,17 +23,14 @@ public class Main {
                             System.out.println("type a value that respond to an option");
                         }
                     } while ((opcao != 1) && (opcao != 2) && (opcao != 3) && (opcao != 4) && (opcao != 5));
-                } catch (InputMismatchException e) {
-                    throw new ForeignException("type a value that respond to an option");
-                }
 
                 switch (opcao) {
                     case 1:
                         try {
                             System.out.print("digite o código do imóvel: ");
                             int codigoImovel = sc.nextInt();
-                            int tipo = 0;
-                            Type type = null;
+                            int tipo;
+                            Type type;
                             do {
                                 System.out.printf("%ndigite o tipo: 1 -> Residencial 2 -> Comercial 3 -> Galpão %n");
                                 tipo = sc.nextInt();
